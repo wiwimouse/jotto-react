@@ -9,8 +9,8 @@ const GuessedWords = ({ guessedWords }) => {
       ) : (
         <div data-test="elm-guessed-words">
           <h3>Guessed Words</h3>
-          <table className="table">
-            <thead>
+          <table className="table table-bordered">
+            <thead className="thead-light">
               <tr>
                 <th>Guess</th>
                 <th>Matching Letters</th>

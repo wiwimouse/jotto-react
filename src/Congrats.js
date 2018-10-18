@@ -6,7 +6,7 @@ const Congrats = ({ success }) => {
     <div className="cpn-congrets" data-test="cpn-congrats">
       {success && (
         <div className="alert alert-success" data-test="elm-message">
-          A simple success alert—check it out!
+          Congratulations! You guessed the word!
         </div>
       )}
     </div>
