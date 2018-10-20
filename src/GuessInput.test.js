@@ -39,8 +39,24 @@ describe('render', () => {
     })
   })
   describe('wrod has been guessed', () => {
-    it('renders component without error', () => {})
-    it('does not renders input', () => {})
-    it('does not renders submit button', () => {})
+    let wrapper
+
+    beforeEach(() => {
+      const initialState = { success: true }
+      wrapper = setup(initialState)
+    })
+
+    it('renders component without error', () => {
+      const component = findByTestAttr(wrapper, ELMENTS.component)
+      expect(component.length).toBe(1)
+    })
+    it('does not renders input', () => {
+      const input = findByTestAttr(wrapper, ELMENTS.input)
+      expect(input.length).toBe(0)
+    })
+    it('does not renders submit button', () => {
+      const button = findByTestAttr(wrapper, ELMENTS.submitButton)
+      expect(button.length).toBe(0)
+    })
   })
 })

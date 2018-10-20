@@ -35,8 +35,10 @@ const GuessInput = class extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {}
+const mapStateToProps = ({ success }) => {
+  return {
+    success
+  }
 }
 
 export default connect(mapStateToProps)(GuessInput)
