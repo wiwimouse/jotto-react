@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { guessWord } from './actions'
 
 const GuessInput = class extends Component {
-  propTypes = {
+  static propTypes = {
     success: PropTypes.bool.isRequired
   }
 
