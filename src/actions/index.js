@@ -1,8 +1,11 @@
 import { getLetterMatchCount } from '../helpers'
 
+import axios from 'axios'
+
 export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
-  GUESSED_WORD: 'GUESSED_WORD'
+  GUESSED_WORD: 'GUESSED_WORD',
+  SET_SECRET_WORD: 'SET_SECRET_WORD'
 }
 
 export const guessWord = guessedWord => {
@@ -21,5 +24,17 @@ export const guessWord = guessedWord => {
     if (guessedWord === secretWord) {
       dispatch({ type: actionTypes.CORRECT_GUESS })
     }
+  }
+}
+
+export const getSecretWord = () => {
+  return function(dispatch) {
+    return axios.get('/api/sercret-word')
+      .then(response => {
+        dispatch({
+          type: actionTypes.SET_SECRET_WORD,
+          payload: response.data
+        })
+      })
   }
 }
