@@ -4,9 +4,22 @@ import { connect } from 'react-redux'
 
 import { guessWord } from './actions'
 
-const GuessInput = class extends Component {
+const UnconnectedGuessInput = class extends Component {
   static propTypes = {
-    success: PropTypes.bool.isRequired
+    success: PropTypes.bool.isRequired,
+    guessWord: PropTypes.func.isRequired
+  }
+
+  state = {
+    inputRef: React.createRef()
+  }
+
+  onSubmit = e => {
+    e.preventDefault()
+    const guessedWord = this.state.inputRef.current.value
+    if (guessedWord && guessedWord.length) this.props.guessWord(guessedWord)
+
+    this.state.inputRef.current.value = ''
   }
 
   render() {
@@ -17,6 +30,7 @@ const GuessInput = class extends Component {
             <div className="form-group">
               <input
                 data-test="elm-input"
+                ref={this.state.inputRef}
                 id="word-guess-input"
                 type="text"
                 className="form-control"
@@ -26,6 +40,7 @@ const GuessInput = class extends Component {
                 data-test="elm-submit-btn"
                 type="submit"
                 className="btn btn-primary"
+                onClick={this.onSubmit}
               >
                 Submit
               </button>
@@ -43,7 +58,8 @@ const mapStateToProps = ({ success }) => {
   }
 }
 
+export { UnconnectedGuessInput }
 export default connect(
   mapStateToProps,
   { guessWord }
-)(GuessInput)
+)(UnconnectedGuessInput)

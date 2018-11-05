@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { findByTestAttr, storeFactory } from '../test/utils'
-import GuessInput from './GuessInput'
+import GuessInput, { UnconnectedGuessInput } from './GuessInput'
 
 const ELMENTS = {
   component: 'cpn-guess-input',
@@ -19,7 +19,7 @@ const setup = (state = {}) => {
 describe('render', () => {
   describe('wrod has not been guessed', () => {
     let wrapper
-    
+
     beforeEach(() => {
       const initialState = { success: false }
       wrapper = setup(initialState)
@@ -72,5 +72,45 @@ describe('redux props', () => {
     const wrapper = setup()
     const guessWordProp = wrapper.instance().props.guessWord
     expect(guessWordProp).toBeInstanceOf(Function)
+  })
+})
+
+describe('`guessWrod` action creator call', () => {
+  let guessedWord
+  let guessWordMock
+  let wrapper
+
+  beforeEach(() => {
+    guessedWord = 'train'
+    guessWordMock = jest.fn()
+    const props = {
+      success: false,
+      guessWord: guessWordMock
+    }
+
+    // set up component with guessWordMock as guessWord prop
+    wrapper = shallow(<UnconnectedGuessInput {...props} />)
+
+    // add value to input
+    wrapper.instance().state.inputRef.current = { value: guessedWord }
+
+    // simulate click
+    const button = findByTestAttr(wrapper, ELMENTS.submitButton)
+    button.simulate('click', { preventDefault() {} })
+  })
+
+  test('calls `guessWord` when button clicked', () => {
+    // check to see if mock run
+    const guessWordCallCount = guessWordMock.mock.calls.length
+    expect(guessWordCallCount).toBe(1)
+  })
+
+  test('calls `guessWord` with input value as argument', () => {
+    const [[guessWordArg]] = guessWordMock.mock.calls
+    expect(guessWordArg).toBe(guessedWord)
+  })
+  
+  test('input clears on submit', () => {
+    expect(wrapper.instance().state.inputRef.current.value).toBe('')
   })
 })
