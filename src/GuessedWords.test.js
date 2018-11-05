@@ -7,7 +7,8 @@ const testAttrValue = {
   component: 'cpn-guessed-words',
   instructions: 'elm-instructions',
   guessedWords: 'elm-guessed-words',
-  guessedWord: 'elm-guessed-word'
+  guessedWord: 'elm-guessed-word',
+  guessedWordCount: 'elm-guessed-word-count'
 }
 const defaultProps = {
   guessedWords: [
@@ -24,7 +25,6 @@ const defaultProps = {
  * @param {object} props Component Props specific to GuessedWords.
  * @returns {ShallowWrapper}
  */
-
 const setup = (props = {}) => {
   const setupProps = { ...defaultProps, ...props }
   return shallow(<GuessedWords {...setupProps} />)
@@ -83,8 +83,24 @@ describe('if there are words guessed', () => {
     expect(guessedWordNodes.length).toBe(1)
   })
 
+  it('renders total guessed word count', () => {
+    const guessedWordCountNode = findByTestAttr(wrapper, testAttrValue.guessedWordCount)
+    expect(guessedWordCountNode.length).toBe(1)
+  })
+
+  it('correct number of guessed word count', () => {
+    const guessedWordCountNode = findByTestAttr(wrapper, testAttrValue.guessedWordCount)
+    expect(guessedWordCountNode.text()).toContain(guessedWords.length)  
+  })
+
   it('correct number of guessed words', () => {
     const guessedWordNodes = findByTestAttr(wrapper, testAttrValue.guessedWord)
     expect(guessedWordNodes.length).toBe(guessedWords.length)
+  })
+
+  it('"guessed words" index shoud start at 1', () => {
+    const guessedWordNodes = findByTestAttr(wrapper, testAttrValue.guessedWord)
+    const firstGuessedWordIndex = guessedWordNodes.first().children().first().text()
+    expect(firstGuessedWordIndex).toBe('1')
   })
 })
