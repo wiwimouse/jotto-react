@@ -8,12 +8,16 @@ import Congrets from './Congrats'
 import GuessedWords from './GuessedWords'
 import GuessInput from './GuessInput'
 
-class App extends Component {
+export class UnconnectedApp extends Component {
   static propTypes = {
     success: PropTypes.bool.isRequired,
     secretWord: PropTypes.string,
     guessedWords: PropTypes.array.isRequired,
     getSecretWord: PropTypes.func.isRequired
+  }
+
+  componentDidMount() {
+    this.props.getSecretWord()
   }
 
   render() {
@@ -36,4 +40,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { getSecretWord }
-)(App)
+)(UnconnectedApp)
