@@ -33,6 +33,7 @@ const UnconnectedGuessInput = class extends Component {
                 type="text"
                 className="form-control"
                 placeholder="enter guess here."
+                value={this.state.guessInputValue}
                 onChange={e =>
                   this.setState({ guessInputValue: e.target.value })
                 }
