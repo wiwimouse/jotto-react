@@ -11,15 +11,14 @@ const UnconnectedGuessInput = class extends Component {
   }
 
   state = {
-    inputRef: React.createRef()
+    guessInputValue: ''
   }
 
   onSubmit = e => {
     e.preventDefault()
-    const guessedWord = this.state.inputRef.current.value
+    const guessedWord = this.state.guessInputValue
     if (guessedWord && guessedWord.length) this.props.guessWord(guessedWord)
-
-    this.state.inputRef.current.value = ''
+    this.setState({ guessInputValue: '' })
   }
 
   render() {
@@ -30,11 +29,13 @@ const UnconnectedGuessInput = class extends Component {
             <div className="form-group">
               <input
                 data-test="elm-input"
-                ref={this.state.inputRef}
                 id="word-guess-input"
                 type="text"
                 className="form-control"
                 placeholder="enter guess here."
+                onChange={e =>
+                  this.setState({ guessInputValue: e.target.value })
+                }
               />
               <button
                 data-test="elm-submit-btn"

@@ -92,7 +92,8 @@ describe('`guessWrod` action creator call', () => {
     wrapper = shallow(<UnconnectedGuessInput {...props} />)
 
     // add value to input
-    wrapper.instance().state.inputRef.current = { value: guessedWord }
+    // wrapper.instance().state.inputRef.current = { value: guessedWord }
+    wrapper.setState({ guessInputValue: guessedWord })
 
     // simulate click
     const button = findByTestAttr(wrapper, ELMENTS.submitButton)
@@ -111,6 +112,6 @@ describe('`guessWrod` action creator call', () => {
   })
   
   test('input clears on submit', () => {
-    expect(wrapper.instance().state.inputRef.current.value).toBe('')
+    expect(wrapper.instance().state.guessInputValue).toBe('')
   })
 })
