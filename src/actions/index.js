@@ -5,7 +5,8 @@ import axios from 'axios'
 export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
   GUESSED_WORD: 'GUESSED_WORD',
-  SET_SECRET_WORD: 'SET_SECRET_WORD'
+  SET_SECRET_WORD: 'SET_SECRET_WORD',
+  RESET_GAME: 'RESET_GAME'
 }
 
 export const guessWord = guessedWord => {
@@ -27,14 +28,17 @@ export const guessWord = guessedWord => {
   }
 }
 
-export const getSecretWord = () => {
-  return function(dispatch) {
-    return axios.get('http://localhost:3030')
-      .then(response => {
-        dispatch({
-          type: actionTypes.SET_SECRET_WORD,
-          payload: response.data
-        })
-      })
-  }
+export const resetGame = () => dispatch => {
+  return dispatch(getSecretWord()).then(() => {
+    dispatch({ type: actionTypes.RESET_GAME })
+  })
+}
+
+export const getSecretWord = () => dispatch => {
+  return axios.get('http://localhost:3030').then(response => {
+    dispatch({
+      type: actionTypes.SET_SECRET_WORD,
+      payload: response.data
+    })
+  })
 }
